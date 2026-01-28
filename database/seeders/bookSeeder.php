@@ -8,9 +8,8 @@ use App\Models\Book;
 
 class bookSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
+
     public function run(): void
     {
         // 1. Dummy buku

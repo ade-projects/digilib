@@ -9,9 +9,8 @@ use App\Models\User;
 
 class userSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
+
     public function run(): void
     {
         // 1. Membuat akun admin

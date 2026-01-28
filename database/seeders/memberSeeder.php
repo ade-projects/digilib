@@ -8,9 +8,8 @@ use App\Models\Member;
 
 class memberSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
+    
     public function run(): void
     {
         // 1. Membuat member dummy
