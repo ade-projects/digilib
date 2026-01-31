@@ -45,10 +45,6 @@
                                                         Username atau password Anda salah.
                                                     </span>
                                                 </div>
-                                                {{-- <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button> --}}
                                             </div>
                                         @endif
                                         <form action="{{ route('login') }}" method="post">
@@ -56,12 +52,21 @@
                                             <div class="form-group mb-3">
                                                 <input type="text" name="username"
                                                     class="form-control form-control-user py-4"
-                                                    placeholder="Masukkan Username" required>
+                                                    placeholder="Masukkan Username" value="{{ old('username') }}"
+                                                    required>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <input type="password" name="password"
-                                                    class="form-control form-control-user py-4"
-                                                    placeholder="Masukkan Password" required>
+                                                <div class="input-group">
+                                                    <input type="password" name="password"
+                                                        class="form-control form-control-user py-4"
+                                                        placeholder="Masukkan Password" required id="password">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <span class="fas fa-eye" id="togglePassword"
+                                                                style="cursor: pointer;"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox small">
@@ -93,17 +98,17 @@
                                         <div class="carousel-inner h-100">
                                             <div class="carousel-item active h-100">
                                                 <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.jpg') }}" alt="Slide 1">
+                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 1">
                                                 <div class="carousel-caption d-none d-md-block">
                                                 </div>
                                             </div>
                                             <div class="carousel-item h-100">
                                                 <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.jpg') }}" alt="Slide 2">
+                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 2">
                                             </div>
                                             <div class="carousel-item h-100">
                                                 <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.jpg') }}" alt="Slide 3">
+                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 3">
                                             </div>
                                         </div>
                                     </div>
@@ -116,6 +121,18 @@
             </div>
         </div>
     </div>
+    <script>
+        // fitur inspect password
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
