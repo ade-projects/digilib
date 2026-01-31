@@ -15,7 +15,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="/dashboard" class="nav-link active">
+                    <a href="{{ route('dashboard') }}" class="nav-link active">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
@@ -23,36 +23,40 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/members" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Anggota
-                        </p>
-                    </a>
+                    {{-- <a href="{{ route('members') }}" class="nav-link"> --}}
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Anggota
+                            </p>
+                        </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Buku
-                        </p>
-                    </a>
+                        {{-- <a href="{{ route('books') }}" class="nav-link"> --}}
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Buku
+                            </p>
+                        </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/transactions" class="nav-link">
-                        <i class="nav-icon fas fa-exchange-alt"></i>
-                        <p>
-                            Peminjaman
-                        </p>
-                    </a>
+                    <a href="#" class="nav-link">
+                        {{-- <a href="{{ route('transactions') }}" class="nav-link"> --}}
+                            <i class="nav-icon fas fa-exchange-alt"></i>
+                            <p>
+                                Peminjaman
+                            </p>
+                        </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/history" class="nav-link">
-                        <i class="nav-icon fas fa-history"></i>
-                        <p>
-                            Histori
-                        </p>
-                    </a>
+                    <a href="#" class="nav-link">
+                        {{-- <a href="{{ route('history') }}" class="nav-link"> --}}
+                            <i class="nav-icon fas fa-history"></i>
+                            <p>
+                                Histori
+                            </p>
+                        </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link"

@@ -11,9 +11,9 @@ Route::post('/login', [AuthController::class, 'login']);
 // Redirect route
 Route::get('/',function () {
     if (Auth::check()) {
-        return redirect('/dashboard');
+        return to_route('dashboard');
     }
-    return redirect('/login');
+    return to_route('login');
 });
 
 // Protected access
