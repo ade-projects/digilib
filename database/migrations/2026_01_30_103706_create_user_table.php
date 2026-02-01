@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'staff'])->default('staff');
+            $table->enum('status', ['active', 'pending', 'banned'])->default('pending');
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ class userSeeder extends Seeder
             'name' => 'Administrator',
             'username' => 'admin',
             'password' => Hash::make('P@ssw0rd'),
+            'status' => 'active',
             'role' => 'admin',
         ]);
 
@@ -26,6 +27,7 @@ class userSeeder extends Seeder
             'name' => 'Staff Perpustakaan',
             'username' => 'staff',
             'password' => Hash::make('P@ssw0rd'),
+            'status' => 'active',
             'role' => 'staff',
         ]);
     }
