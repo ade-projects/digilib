@@ -104,15 +104,15 @@
                                         <div class="carousel-inner h-100">
                                             <div class="carousel-item active h-100">
                                                 <img class="image-cover" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/2.jpg') }}" alt="Library 1">
+                                                    src="{{ asset('assets/img/1.webp') }}" alt="Library 1">
                                             </div>
                                             <div class="carousel-item h-100">
                                                 <img class="image-cover"
-                                                    src="{{ asset('assets/img/3.jpg') }}" alt="Library 2">
+                                                    src="{{ asset('assets/img/2.webp') }}" alt="Library 2">
                                             </div>
                                             <div class="carousel-item h-100">
                                                 <img class="image-cover"
-                                                    src="{{ asset('assets/img/7.jpg') }}" alt="Library 3">
+                                                    src="{{ asset('assets/img/3.webp') }}" alt="Library 3">
                                             </div>
                                         </div>
                                     </div>

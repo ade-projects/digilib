@@ -25,6 +25,15 @@ class AuthController extends Controller
 
         // validasi username & password->dashboard
         if (Auth::attempt($credentials)) {
+            // validasi status user
+            if (Auth::user()->status != 'active') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()->withErrors([
+                    'username' => 'Akun Anda masih menunggu persetujuan Admin.',
+                ])->onlyInput('username');
+            }
             $request->session()->regenerate();
             return to_route('dashboard');
         }

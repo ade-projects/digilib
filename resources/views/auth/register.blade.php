@@ -122,15 +122,15 @@
                                         </ol>
                                         <div class="carousel-inner h-100">
                                             <div class="carousel-item active h-100">
-                                                <img class="image-cover" src="{{ asset('assets/img/2.jpg') }}"
+                                                <img class="image-cover" src="{{ asset('assets/img/1.webp') }}"
                                                     alt="Library 1">
                                             </div>
                                             <div class="carousel-item h-100">
-                                                <img class="image-cover" src="{{ asset('assets/img/3.jpg') }}"
+                                                <img class="image-cover" src="{{ asset('assets/img/2.webp') }}"
                                                     alt="Library 2">
                                             </div>
                                             <div class="carousel-item h-100">
-                                                <img class="image-cover" src="{{ asset('assets/img/7.jpg') }}"
+                                                <img class="image-cover" src="{{ asset('assets/img/3.webp') }}"
                                                     alt="Library 3">
                                             </div>
                                         </div>
