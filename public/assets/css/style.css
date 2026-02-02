@@ -1,0 +1,47 @@
+.auth-page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+    overflow: hidden;
+}
+
+.card-fixed-height {
+    /* height: 650px; */
+    height: 80vh;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.form-section {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+}
+
+.form-container {
+    width: 100%;
+    padding: 3rem;
+}
+
+.image-section {
+    height: 100%;
+    padding: 0;
+    background-color: #007bff;
+}
+
+.image-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.password-hint {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+}

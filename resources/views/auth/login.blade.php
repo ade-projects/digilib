@@ -15,100 +15,104 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <!-- auth page style-->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 
-<body class="hold-transition login-page">
+<body>
     <!-- /.login-box -->
-    <div class="login-page"
-        style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #e9ecef;">
-
+    <div class="auth-page">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
 
-                    <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 15px;">
-                        <div class="card-body p-0">
+                    <div class="card border-0 shadow-lg card-fixed-height">
+                        <div class="card-body p-0 h-100">
 
-                            <div class="row no-gutters">
+                            <div class="row no-gutters h-100">
 
-                                <div class="col-lg-6 d-flex align-items-center bg-white">
-                                    <div class="p-5 w-100" style="min-height: 450px;">
+                                <div class="col-lg-6 bg-white form-section">
+                                    <div class="form-container">
                                         <div class="text-center mb-4">
-                                            <h1 class="h4 text-gray-900 mb-4">Selamat Datang di <b>Digilib</b></h1>
+                                            <h1 class="h4 text-gray-900">Selamat Datang di <b>Digilib</b></h1>
+                                            <p class="small text-muted">Silakan masuk untuk melanjutkan</p>
                                         </div>
 
                                         @if ($errors->any())
-                                            <div class="alert alert-danger alert dismissable fade show" role="alert">
-                                                <div class="d-flex align-items-center">
+                                            <div class="alert alert-danger alert dismissable fade show" role="alert" style="font-size: 0.9rem;">
                                                     <i class="fas fa-exclamation-triangle mr-2"></i>
                                                     <span>
-                                                        Username atau password Anda salah.
+                                                        {{ $errors->first() }}
                                                     </span>
-                                                </div>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">
+                                                        &times;
+                                                    </span>
+                                                </button>
                                             </div>
                                         @endif
+
+                                        @if (session('success'))
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 0.9rem;">
+                                                <i class="fas fa-check-circle mr-1"></i> {{ session('success') }}
+                                            </div>
+                                        @endif
+                                        
                                         <form action="{{ route('login') }}" method="post">
                                             @csrf
+
                                             <div class="form-group mb-3">
                                                 <input type="text" name="username"
                                                     class="form-control form-control-user py-4"
-                                                    placeholder="Masukkan Username" value="{{ old('username') }}"
+                                                    placeholder="Username" value="{{ old('username') }}"
                                                     required>
                                             </div>
+
                                             <div class="form-group mb-3">
                                                 <div class="input-group">
                                                     <input type="password" name="password"
                                                         class="form-control form-control-user py-4"
-                                                        placeholder="Masukkan Password" required id="password">
+                                                        placeholder="Password" required id="password" style="border-right: 0;">
                                                     <div class="input-group-append">
-                                                        <div class="input-group-text">
-                                                            <span class="fas fa-eye" id="togglePassword"
-                                                                style="cursor: pointer;"></span>
+                                                        <div class="input-group-text bg-white" style="border-left: 0;">
+                                                            <span class="fas fa-eye toggle-password" data-target="#password"
+                                                                style="cursor: pointer; color: #6c757d;"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="customCheck">
-                                                    <label class="custom-control-label" for="customCheck">Ingat
-                                                        Saya</label>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary btn-block py-2">
-                                                Login
+                                            <button type="submit" class="btn btn-primary btn-block py-2 mt-3">
+                                                Masuk
                                             </button>
                                         </form>
 
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="#">Lupa Password?</a>
+                                            <p class="mb-0">Belum punya akun? <a class="medium"
+                                                href="{{ route('register') }}">Daftar disini</a></p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 d-none d-lg-block bg-primary p-0">
-                                    <div id="carouselIndicators" class="carousel slide h-100" data-ride="carousel">
+                                <div class="col-lg-6 d-none d-lg-block image-section">
+                                    <div id="carouselLogin" class="carousel slide h-100" data-ride="carousel">
                                         <ol class="carousel-indicators">
-                                            <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
-                                            <li data-target="#carouselIndicators" data-slide-to="1"></li>
-                                            <li data-target="#carouselIndicators" data-slide-to="2"></li>
+                                            <li data-target="#carouselLogin" data-slide-to="0" class="active"></li>
+                                            <li data-target="#carouselLogin" data-slide-to="1"></li>
+                                            <li data-target="#carouselLogin" data-slide-to="2"></li>
                                         </ol>
                                         <div class="carousel-inner h-100">
                                             <div class="carousel-item active h-100">
-                                                <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 1">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                </div>
+                                                <img class="image-cover" style="object-fit: cover;"
+                                                    src="{{ asset('assets/img/2.jpg') }}" alt="Library 1">
                                             </div>
                                             <div class="carousel-item h-100">
-                                                <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 2">
+                                                <img class="image-cover"
+                                                    src="{{ asset('assets/img/3.jpg') }}" alt="Library 2">
                                             </div>
                                             <div class="carousel-item h-100">
-                                                <img class="d-block w-100 h-100" style="object-fit: cover;"
-                                                    src="{{ asset('assets/img/1.webp') }}" alt="Slide 3">
+                                                <img class="image-cover"
+                                                    src="{{ asset('assets/img/7.jpg') }}" alt="Library 3">
                                             </div>
                                         </div>
                                     </div>
@@ -118,21 +122,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
-    <script>
-        // fitur inspect password
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
-
-        togglePassword.addEventListener('click', function (e) {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-
-            this.classList.toggle('fa-eye-slash');
-        });
-    </script>
+    <!-- Inspect Password -->
+    <script src="{{ asset('assets/js/inspectPassword.js') }}"></script>
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
