@@ -15,7 +15,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link active">
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : ''}}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
@@ -58,6 +59,19 @@
                             </p>
                         </a>
                 </li>
+
+                @if (auth()->user()->role == 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}"
+                            class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Kelola Pengguna
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a href="#" class="nav-link"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
