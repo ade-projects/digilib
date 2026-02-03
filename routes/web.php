@@ -37,4 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     // 3. Manajemen pengguna
     Route::resource('users', UserController::class);
+
+    // 4. middleware is_admin
+    Route::resource('users', UserController::class)->middleware('is_admin');
 });
