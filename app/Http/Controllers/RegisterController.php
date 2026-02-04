@@ -30,6 +30,7 @@ class RegisterController extends Controller
         ], [
             // custom error messages
             'username.min' => 'Username minimal harus 5 karakter.',
+            'username.unique' => 'Username ini sudah digunakan.',
             'password.min' => 'Password minimal harus 8 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'password' => 'Password harus mengandung huruf, angka, dan simbol.',

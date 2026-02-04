@@ -60,7 +60,8 @@
                         Daftar Semua Pengguna
                     </h3>
                     <div class="card-tools">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                            data-target="#modal-create">
                             <i class="fas fa-plus"></i> Tambah User
                         </button>
                     </div>
@@ -154,6 +155,107 @@
         </div>
     </section>
 
+    <div class="modal fade" id="modal-create">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Pengguna Baru</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('users.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control @error('username') is-invalid
+                            @enderror" placeholder="Username (Min. 5 digit)" value="{{ old('username') }}" required>
+                            @error('username')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select name="role" class="form-control">
+                                        <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff</option>
+                                        <option value="admin" {{ old('role') == 'staff' ? 'selected' : '' }}>Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="active" {{ old('status' == 'active' ? 'selected' : '') }}>Active
+                                        </option>
+                                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending
+                                        </option>
+                                        <option value="banned" {{ old('banned' ? 'selected' : '') }}>Banned</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control @error('password') is-invalid
+                                @enderror" id="create_password" placeholder="Password" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-eye toggle-password" data-target="#create_password"
+                                            style="cursor: pointer;"></span>
+                                    </div>
+                                </div>
+                                @error('password')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <p class="password-hint">
+                            <i class="fas fa-info-circle mr-1"></i> Min. 8 karakter, kombinasi
+                            huruf, angka & simbol.
+                        </p>
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password_confirmation" class="form-control"
+                                    id="create_password_confirm" placeholder="Ulangi Password" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-eye toggle-password" data-target="#create_password_confirm"
+                                            style="cursor: pointer;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -195,10 +297,40 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Reset Password <small class="text-muted">(Kosongkan jika tidak ingin
-                                    mengubah)</small></label>
-                            <input type="password" name="password" id="password" class="form-control"
-                                placeholder="Password Baru">
+                            <label>Password Baru<small class="text-muted">(Kosongkan jika tidak ingin mengubah)
+                                </small></label>
+                            <div class="input-group">
+                                <input type="password" name="password" id="edit_password" class="form-control @error('password') is-invalid
+                                @enderror" placeholder="Password Baru">
+
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-eye toggle-password" data-target="#edit_password"
+                                            style="cursor: pointer;"></span>
+                                    </div>
+                                </div>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <p class="password-hint">
+                            <i class="fas fa-info-circle mr-1"></i> Min. 8 karakter, kombinasi
+                            huruf, angka & simbol.
+                        </p>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password_confirmation" id="edit_password_confirmation"
+                                    class="form-control" placeholder="Ulangi Password Baru">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-eye toggle-password" data-target="#edit_password_confirmation"
+                                            style="cursor: pointer;"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer justify-content-between">
@@ -211,12 +343,9 @@
         </div>
     </div>
 
+    <!-- jquery script -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Inspect Password -->
-    <script src="{{ asset('assets/js/inspectPassword.js') }}"></script>
-    <!-- coba2-->
-    {{--
-    <script src="{{ asset('assets/js/main.js') }}"></script> --}}
+
     <script>
         $(document).ready(function () {
             // cek apakah script berjalan
@@ -237,32 +366,23 @@
                 $("#edit-username").val(username);
                 $("#edit-role").val(role);
                 $("#edit-status").val(status);
+                $("#edit_password").val('');
+                $('#edit_password_confirmation').val('');
 
                 let url = "{{ route('users.index') }}" + "/" + id;
                 $("#form-edit").attr("action", url);
 
                 console.log("Modal diisi untuk User ID: " + id);
             });
-            // 1. Mengaktifkan datatables
-            // $("#example1")
-            //     .DataTable({
-            //         responsive: true,
-            //         lengthChange: false,
-            //         autoWidth: false,
-            //         buttons: ["copy", "csv", "excel", "pdf", "print"],
-            //     })
-            //     .buttons()
-            //     .container()
-            //     .appendTo("#example1_wrapper .col-md-6:eq(0)");
-
-
-        });
-
+            // re-open modal
+            @if ($errors->any())
+                $('#modal-create').modal('show');
+            @endif
+                                                                                                                            });
     </script>
 
 @endsection
-{{-- tambah inspect password lagi --}}
-{{-- setelah banned user masih bisa diedit untuk memulihkan --}}
-{{-- tombol approve dan banned masih gak berfungsi --}}
-
-{{-- The PUT method is not supported for route users. Supported methods: GET, HEAD, POST. --}}
+<!-- Inspect Password -->
+@push('scripts')
+    <script src="{{ asset('assets/js/inspectPassword.js') }}"></script>
+@endpush
