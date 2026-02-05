@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+  <!-- sweet alert style -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Custom style -->
   @stack('styles')
 </head>
@@ -50,6 +52,36 @@
   <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+  <!-- sweetalert script -->
+  <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <!-- konfigurasi notifikasi aksi -->
+  <script>
+    $(function () {
+      // 1. Konfigurasi toast
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      // 2. Cek session success dari controller
+      @if (session('success'))
+        Toast.fire({
+          icon: 'success',
+          title: '{{ session('success') }}'
+        });
+      @endif
+
+      // 3. Cek session error 
+      @if (session('error'))
+        Toast.fire({
+          icon: 'error',
+          title: '{{ session('error') }}'
+        })
+      @endif
+    });
+  </script>
   <!-- Custom script -->
   @stack('scripts')
 </body>
