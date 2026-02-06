@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -36,16 +37,22 @@ class RegisterController extends Controller
             'password' => 'Password harus mengandung huruf, angka, dan simbol.',
         ]);
 
-        // Buat user baru
-        User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role' => 'staff',
-            'status' => 'pending',
-        ]);
+        try {
+            // Buat user baru
+            User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'role' => 'staff',
+                'status' => 'pending',
+            ]);
 
-        // redirect user->login page
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Mohon tunggu persetujuan Admin untuk login.');
+            // redirect user->login page
+            return redirect()->route('login')->with('success', 'Registrasi berhasil! Mohon tunggu persetujuan Admin untuk login.');
+
+        } catch (\Exception $e) {
+            Log::error("Error Register User: " . $e->getMessage());
+            return back()->withInput()->with('error', 'Registrasi gagal karena gangguan sistem. Silakan coba sesaat lagi.');
+        }
     }
 }
