@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Book;
+use App\Models\Category;
 
 class bookSeeder extends Seeder
 {
@@ -12,12 +13,20 @@ class bookSeeder extends Seeder
 
     public function run(): void
     {
+        $novel = Category::where('name', 'Novel & Fiksi')->first();
+        $bio = Category::where('name', 'Otobiografi')->first();
+
+        if (!$novel || !$bio) {
+            $this->command->error('Error: Kategori tidak ditemukan! Jalankan CategorySeeder dulu.');
+            return;
+        }
+        
         // 1. Dummy buku
         Book::create([
             'title' => 'Laskar Pelangi',
             'author' => 'Andrea Hirata',
-            'category' => 'Novel',
-            'stock' => 5,
+            'category_id' => $novel->id,
+            'stock' => 10,
             'isbn' => '979-3062-79-7',
             'pages' => '529',
             'language' => 'Indonesia',
@@ -29,7 +38,7 @@ class bookSeeder extends Seeder
         Book::create([
             'title' => 'Mein Kampf',
             'author' => 'Adolf Hitler',
-            'category' => 'Otobiografi',
+            'category_id' => $bio->id,
             'stock' => 1,
             'isbn' => '978-0395951057',
             'pages' => '720',

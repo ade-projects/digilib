@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->string('category', 50)->nullable();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('restrict');
             $table->integer('stock')->default(0);
             $table->string('isbn', 20)->unique()->nullable();
             $table->integer('pages')->nullable();

@@ -12,7 +12,7 @@ class Book extends Model
     protected $fillable = [
         'title',
         'author',
-        'category',
+        'category_id',
         'stock',
         'isbn',
         'pages',
@@ -20,4 +20,8 @@ class Book extends Model
         'description',
         'cover_image',
     ];
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }
