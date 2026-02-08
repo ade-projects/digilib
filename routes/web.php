@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -35,9 +36,12 @@ Route::middleware(['auth'])->group(function () {
     // 2. Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // 3. Manajemen pengguna
-    Route::resource('users', UserController::class);
+    // 3. Manajemen kategori
+    Route::resource('categories', CategoryController::class);
 
-    // 4. middleware is_admin
-    Route::resource('users', UserController::class)->middleware('is_admin');
+    // 4. middleware zona admin
+    Route::middleware(['is_admin'])->group(function () {
+        Route::resource('users', UserController::class);
+    });
+    
 });

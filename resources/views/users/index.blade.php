@@ -348,10 +348,7 @@
 
     <script>
         $(document).ready(function () {
-            // cek apakah script berjalan
-            console.log("Script User Management Ready!");
-
-            // 2. script isi data->modal edit
+            // script isi data->modal edit
             $(document).on("click", ".btn-edit", function () {
                 // ambil data
                 let id = $(this).data("id");
@@ -371,14 +368,12 @@
 
                 let url = "{{ route('users.index') }}" + "/" + id;
                 $("#form-edit").attr("action", url);
-
-                console.log("Modal diisi untuk User ID: " + id);
             });
             // re-open modal
             @if ($errors->any())
                 $('#modal-create').modal('show');
             @endif
-                                                                                                                            });
+                                                                                                                                });
     </script>
 
 @endsection
