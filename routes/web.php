@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BookController;
 
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -39,7 +40,10 @@ Route::middleware(['auth'])->group(function () {
     // 3. Manajemen kategori
     Route::resource('categories', CategoryController::class);
 
-    // 4. middleware zona admin
+    // 4. Manajemen buku
+    Route::resource('books', BookController::class);
+
+    // 5. middleware zona admin
     Route::middleware(['is_admin'])->group(function () {
         Route::resource('users', UserController::class);
     });
