@@ -17,6 +17,7 @@ class Transaction extends Model
         'return_date',
         'actual_return_date',
         'status',
+        'fine',
     ];
 
     protected $casts = [
