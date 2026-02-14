@@ -24,13 +24,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    {{-- <a href="{{ route('members') }}" class="nav-link"> --}}
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Anggota
-                            </p>
-                        </a>
+                    <a href="{{ route('members.index') }}"
+                        class="nav-link {{ request()->routeIs('members.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Anggota
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link">

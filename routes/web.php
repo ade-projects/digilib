@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\MemberController;
 
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -43,7 +44,10 @@ Route::middleware(['auth'])->group(function () {
     // 4. Manajemen buku
     Route::resource('books', BookController::class);
 
-    // 5. middleware zona admin
+    // 5. Manajemen anggota
+    Route::resource('members', MemberController::class);
+
+    // 6. middleware zona admin
     Route::middleware(['is_admin'])->group(function () {
         Route::resource('users', UserController::class);
     });
