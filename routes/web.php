@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\TransactionController;
 
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -47,7 +48,10 @@ Route::middleware(['auth'])->group(function () {
     // 5. Manajemen anggota
     Route::resource('members', MemberController::class);
 
-    // 6. middleware zona admin
+    // 6. Peminjaman buku
+    Route::resource('transactions', TransactionController::class);
+
+    // 7. middleware zona admin
     Route::middleware(['is_admin'])->group(function () {
         Route::resource('users', UserController::class);
     });

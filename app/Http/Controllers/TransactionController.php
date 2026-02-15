@@ -16,7 +16,7 @@ class TransactionController extends Controller
     // tampil daftar transaksi
     public function index() {
         // ambil data transaksi
-        $transactions = Transaction::with(['member', 'user', 'details.boook'])
+        $transactions = Transaction::with(['member', 'user', 'details.book'])
             ->latest()
             ->get();
 
@@ -78,7 +78,7 @@ class TransactionController extends Controller
             return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil! Stok buku telah dikurangi.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Gagal memproses transaksi: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memproses transaksi.');
         }
     }
 
@@ -145,8 +145,8 @@ class TransactionController extends Controller
         try {
             DB::beginTransaction();
 
-            if ($transaction->status == 'borrowed') {
-                foreach ($transaction->details() as $detail) {
+            if ($transaction->status !== 'returned') {
+                foreach ($transaction->details as $detail) {
                     Book::where('id', $detail->book_id)->increment('stock');
                 }
             }
@@ -154,11 +154,11 @@ class TransactionController extends Controller
             $transaction->delete();
 
             DB::commit();
-            return back()->with('success', 'Riwayat transaksi dihapus.');
+            return back()->with('success', 'Riwayat transaksi dihapus dan stok buku telah dikembalikan.');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Gagal menghapus.');
+            return back()->with('error', 'Gagal menghapus data.');
         }
     }
 }

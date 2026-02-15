@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
          // Buat tabel transaction_details -> detail buku
-        Schema::create('transactions_details', function(Blueprint $table) {
+        Schema::create('transaction_details', function(Blueprint $table) {
             $table->id();
             $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
             $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
