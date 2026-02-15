@@ -206,10 +206,11 @@
                             let rows = '';
                             $.each(response.details, function (key, item) {
                                 rows += `<tr>
-                                                                            <td>${key + 1}</td>
-                                                                            <td>${item.book.title}</td>
-                                                                            <td>${item.book.author}</td>
-                                                                        </tr>`;
+                                                                                    <td>${key + 1}</td>
+                                                                                    <td>${item.book.title}</td>
+                                                                                    <td>${item.qty} Pcs</td>
+                                                                                    <td>${item.book.author}</td>
+                                                                                </tr>`;
                             });
                             $('#val-books-list').html(rows);
                             $('#modal-detail').modal('show');
@@ -261,7 +262,7 @@
                 @if (session('error'))
                     Swal.fire({ icon: 'error', title: 'Gagal!', text: '{{ session('error') }}' });
                 @endif
-                    });
+                            });
         </script>
     @endpush
 @endsection

@@ -47,16 +47,42 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Pilih Buku (Bisa lebih dari 1) <span class="text-danger">*</span></label>
-                                    <select name="book_ids[]" class="form-control select2" multiple="multiple"
-                                        style="width: 100%;" required>
-                                        @foreach ($books as $book)
-                                            <option value="{{ $book->id }}">
-                                                {{ $book->title }} (Stok: {{ $book->stock }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-muted">Ketik judul buku untuk mencari.</small>
+                                    <label>Daftar Buku yang Dipinjam</label>
+                                    <table class="table table-bordered table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Judul Buku</th>
+                                                <th width="100">Jumlah</th>
+                                                <th width="50">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="transaction-rows">
+                                            <tr>
+                                                <td>
+                                                    <select name="book_ids[]" class="form-control select2-book" required>
+                                                        <option value="-- Pilih Buku --"></option>
+                                                        @foreach ($books as $book)
+                                                            <option value="{{ $book->id }}" data-stock="{{ $book->stock }}">
+                                                                {{ $book->title }} (Sisa: {{ $book->stock }})
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="quantities[]" class="form-control" min="1"
+                                                        value="1" required>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm btn-remove" disabled>
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-success btn-sm mt-2" id="add-row">
+                                        <i class="fas fa-plus"></i> Tambah Buku Lain
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -77,9 +103,45 @@
             $(document).ready(function () {
                 $('.select2').select2({
                     theme: 'bootstrap4',
-                    placeholder: 'Pilih data...'
                 });
-            })
+
+                function initBookSelect() {
+                    $('.select2-book').select2({
+                        theme: 'bootstrap4',
+                        placeholder: "Pilih Buku"
+                    });
+                }
+                initBookSelect();
+
+                $('#add-row').click(function () {
+                    let row = `<tr>
+                                                <td>
+                                                    <select name="book_ids[]" class="form-control select2-book" required>
+                                                        <option value="">-- Pilih Buku --</option>
+                                                        @foreach($books as $book)
+                                                            <option value="{{ $book->id }}">{{ $book->title }} (Sisa: {{ $book->stock }})</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="quantities[]" class="form-control" min="1" value="1" required>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm btn-remove">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>`;
+
+                    $('#transaction-rows').append(row);
+                    initBookSelect();
+                });
+
+                // hapus BARIS
+                $(document).on('click', '.btn-remove', function () {
+                    $(this).closest('tr').remove();
+                });
+            });
         </script>
     @endpush
 @endsection

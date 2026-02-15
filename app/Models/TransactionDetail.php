@@ -12,6 +12,7 @@ class TransactionDetail extends Model
     protected $fillable = [
         'transaction_id',
         'book_id',
+        'qty',
     ];
 
     public function transaction() {

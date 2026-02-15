@@ -48,10 +48,23 @@ class TransactionController extends Controller
             'member_id' => 'required|exists:members,id',
             'book_ids' => 'required|array',
             'book_ids.*' => 'exists:books,id',
+            'quantities' => 'required|array',
+            'quantities.*' => 'integer|min:1', 
         ]);
 
         // 2. Gunakan DB transaction
         try {
+            DB::beginTransaction();
+            // cek stok 
+            foreach ($request->book_ids as $index => $book_id) {
+                $book = Book::find($book_id);
+                $qty_diminta = $request->quantities[$index];
+
+                if ($book->stock < $qty_diminta) {
+                    return back()->with('error', "Stok buku '{$book->title}' tidak cukup! (Sisa: {$book->stock}, Diminta: {$qty_diminta})")->withInput();
+                }
+            }
+
             // buat header transaksi
             $transaction = Transaction::create([
                 'invoice_no' => 'TRX-' . time(),
@@ -64,18 +77,22 @@ class TransactionController extends Controller
             ]);
 
             // Proses detail buku & kurangi stok
-            foreach ($request->book_ids as $book_id) {
+            foreach ($request->book_ids as $index => $book_id) {
+                $qty = $request->quantities[$index];
+                
                 TransactionDetail::create([
                     'transaction_id' => $transaction->id,
                     'book_id' => $book_id,
+                    'qty' => $qty,
                 ]);
 
-                Book::where('id', $book_id)->decrement('stock');
+                Book::where('id', $book_id)->decrement('stock', $qty);
             }
 
             DB::commit();
 
-            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil! Stok buku telah dikurangi.');
+            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil disimpan!');
+        
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Gagal memproses transaksi.');
@@ -107,14 +124,14 @@ class TransactionController extends Controller
 
             if ($returnDate->gt($dueDate)) {
                 $hariTelat = $returnDate->diffInDays($dueDate);
-                $jumlahBuku = $transaction->details->count();
+                $totalBuku = $transaction->details->sum('qty');
 
-                $denda = $hariTelat * 1000 * $jumlahBuku;
+                $denda = $hariTelat * 1000 * $totalBuku;
             }
 
             // kembalikan stok buku
             foreach ($transaction->details as $detail) {
-                $detail->book->increment('stock');
+                $detail->book->increment('stock', $detail->qty);
             }
 
             // update status transaksi
@@ -147,7 +164,7 @@ class TransactionController extends Controller
 
             if ($transaction->status !== 'returned') {
                 foreach ($transaction->details as $detail) {
-                    Book::where('id', $detail->book_id)->increment('stock');
+                    Book::where('id', $detail->book_id)->increment('stock', $detail->qty);
                 }
             }
 
