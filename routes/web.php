@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ReportController;
 
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -51,7 +52,11 @@ Route::middleware(['auth'])->group(function () {
     // 6. Peminjaman buku
     Route::resource('transactions', TransactionController::class);
 
-    // 7. middleware zona admin
+    // 7. Laporan
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/print', [ReportController::class, 'print'])->name('reports.print');
+
+    // 8. middleware zona admin
     Route::middleware(['is_admin'])->group(function () {
         Route::resource('users', UserController::class);
     });
