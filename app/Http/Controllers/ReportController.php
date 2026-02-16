@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Exports\TransactionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -50,5 +52,14 @@ class ReportController extends Controller
         $total_denda = $transactions->sum('fine');
 
         return view('reports.print', compact('transactions', 'startDate', 'endDate', 'total_denda'));
+    }
+
+    public function exportExcel(Request $request) {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $filename = 'Laporan-' . $startDate . '-sd-' . $endDate . '.xlsx';
+
+        return Excel::download(new TransactionExport($startDate, $endDate), $filename);
     }
 }

@@ -41,10 +41,6 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
-    @include('layouts.partials.footer')
-    <!-- ./main-footer -->
-
   </div>
   <!-- ./wrapper -->
 

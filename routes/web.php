@@ -10,6 +10,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
 
+
 // Public route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -55,7 +56,8 @@ Route::middleware(['auth'])->group(function () {
     // 7. Laporan
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/print', [ReportController::class, 'print'])->name('reports.print');
-
+    Route::get('/report/export-excel', [ReportController::class, 'exportExcel'])->name('reports.export_excel');
+    
     // 8. middleware zona admin
     Route::middleware(['is_admin'])->group(function () {
         Route::resource('users', UserController::class);

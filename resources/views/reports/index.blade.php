@@ -34,6 +34,10 @@
                                 <div class="form-group w-100">
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-filter">
                                             Filter</i></button>
+                                    <a href="{{ route('reports.export_excel', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
+                                        class="btn btn-success">
+                                        <i class="fas fa-file-excel"> Excel</i>
+                                    </a>
                                     <a href="{{ route('reports.print', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
                                         target="_blank" class="btn btn-danger float-right"><i class="fas fa-print"></i>
                                         Cetak PDF</a>
