@@ -49,6 +49,6 @@ class ReportController extends Controller
 
         $total_denda = $transactions->sum('fine');
 
-        return view('report.print', compact('transactions', 'startDate', 'endDate', 'total_denda'));
+        return view('reports.print', compact('transactions', 'startDate', 'endDate', 'total_denda'));
     }
 }

@@ -67,13 +67,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        {{-- <a href="{{ route('history') }}" class="nav-link"> --}}
-                            <i class="nav-icon fas fa-history"></i>
-                            <p>
-                                Histori
-                            </p>
-                        </a>
+                    <a href="{{ route('reports.index') }}"
+                        class="nav-link {{ request()->routeIs('reports.*') ? 'active' : ''  }}">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>
+                            Laporan
+                        </p>
+                    </a>
                 </li>
 
                 @if (auth()->user()->role == 'admin')
